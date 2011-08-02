@@ -18,7 +18,7 @@ class CSVParser(object):
         """
 
         # Open the file for reading
-        self.csvFile = csv.reader(open(filePath, 'rb'), delimiter=delimiter, quoateChar=quoteCharacter)
+        self.csvFile = csv.reader(open(filePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
 
 
     def parseMentees(self):
@@ -27,7 +27,48 @@ class CSVParser(object):
 
             @return     The list of mentees parsed from the input file
         """
-        return None
+
+        # Dictionary of applicants, indexed by userId (assumed to be first entry),
+        #   where each is a dictionary of properties of the mentee
+        mentees = {}
+
+        # Grab the fields for a mentee out of the first row of the spreadsheet
+        fields = None
+        for row in self.csvFile:
+            fields = []
+            for value in row:
+                if value.startswith("Q"):
+                    fields += [value.split(":")[1]]
+                else:
+                    fields += [value]
+            break
+
+        # Iterate through the rows of the csv
+        rowIndex = 0
+        for row in self.csvFile:
+
+            # For keeping track of the mentee we're currently building
+            cellIndex = 0
+            netId = None
+
+            # Skip the title row
+            if rowIndex > 0:
+                for value in row:
+
+                    if cellIndex > 0:
+
+                        key = fields[cellIndex]
+                        mentees[netId][key] = value.strip()
+
+                    else:
+                        netId = value.split("@")[0].strip()
+                        mentees[netId] = {}
+
+                    cellIndex += 1
+                    pass
+            rowIndex += 1
+
+        return mentees
 
 
     def parseMentors(self):
