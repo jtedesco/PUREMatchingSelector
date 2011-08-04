@@ -5,10 +5,11 @@ class Mentee(object):
      Represents a PURE mentee, containing information such as their year, interests, and qualifications.
     """
 
-    def __init__(self, firstName, lastName, year, email, qualifications, courses, mentors, areas):
+    def __init__(self, netId, firstName, lastName, year, email, qualifications, courses, mentors, areas):
         """
          Builds a mentee object with the given fields.
 
+            @param  netId           the netid of the mentee
             @param  firstName       the mentee's first name
             @param  lastName        the mentee's last name
             @param  year            the year of the mentee (junior, sophomore, freshman, senior)
@@ -19,6 +20,7 @@ class Mentee(object):
             @param  areas           the areas in which the mentee is interested in working
         """
 
+        self.netId = netId
         self.firstName = firstName
         self.lastName = lastName
         self.year = year
@@ -35,4 +37,4 @@ class Mentee(object):
 
             @param  otherMentor     The mentor to which to compare this mentor object
          """
-         return (self.firstName == otherMentee.firstName) and (self.lastName == otherMentee.lastName)
+         return (self.netId == otherMentee.netId) and (self.firstName == otherMentee.firstName) and (self.lastName == otherMentee.lastName)

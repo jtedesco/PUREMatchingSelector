@@ -8,7 +8,7 @@ class CSVParser(object):
       or a list of mentees.
     """
 
-    def __init__(self, filePath, delimiter=' ', quoteCharacter='|'):
+    def __init__(self, filePath, delimiter=' ', quoteCharacter='"'):
         """
          Builds a CSV parser to parse the given file.
 
@@ -21,16 +21,60 @@ class CSVParser(object):
         self.csvFile = csv.reader(open(filePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
 
 
+    def parseMentorsAndMentees(self):
+        """
+         From the input file, parse the lists of mentor and mentee objects.
+
+            @return
+                1)  The list of mentees parsed from the input file
+                2)  The list of mentors parsed from the input file
+        """
+
+
     def parseMentees(self):
         """
-         From the input file, parse a list of mentee objects.
+         From the input file, build the list of mentee objects (without the mentor objects).
 
-            @return     The list of mentees parsed from the input file
+            @return
         """
 
-        # Dictionary of applicants, indexed by userId (assumed to be first entry),
-        #   where each is a dictionary of properties of the mentee
-        mentees = {}
+        # Build a dictionary of mentee data, indexed by netid
+        menteesData = self.parseCSV()
+
+        # A list of mentee objects
+        mentees = []
+
+        for netId in menteesData:
+
+            # Get the data for this mentee
+            firstName = self.findField(menteesData, 'first name')
+            lastName = self.findField(menteesData, 'last name')
+            gpa = self.findField(menteesData, 'gpa')
+
+#            newMentee = Mentee()
+
+
+        return mentees
+
+
+    def parseMentors(self):
+        """
+         From the input file, parse a list of mentor objects
+
+            @return     The list of mentor objects parsed from the input file
+        """
+        return None
+
+
+    def parseCSV(self):
+        """
+         Parses a CSV and returns a dictionary of mentors or mentees, indexed by
+            netid.
+
+            @return The parsed data
+        """
+
+        objects = {}
 
         # Grab the fields for a mentee out of the first row of the spreadsheet
         fields = None
@@ -46,7 +90,6 @@ class CSVParser(object):
         # Iterate through the rows of the csv
         rowIndex = 0
         for row in self.csvFile:
-
             # For keeping track of the mentee we're currently building
             cellIndex = 0
             netId = None
@@ -54,27 +97,39 @@ class CSVParser(object):
             # Skip the title row
             if rowIndex > 0:
                 for value in row:
-
                     if cellIndex > 0:
-
                         key = fields[cellIndex]
-                        mentees[netId][key] = value.strip()
+                        objects[netId.lower()].append((key.lower(), value.strip()))
 
                     else:
                         netId = value.split("@")[0].strip()
-                        mentees[netId] = {}
+                        objects[netId.lower()] = []
 
                     cellIndex += 1
                     pass
             rowIndex += 1
 
-        return mentees
+        return objects
 
+    
 
-    def parseMentors(self):
+    def findField(self, propertyList, field):
         """
-         From the input file, parse a list of mentor objects
+         Loops through a list of tuples, where each tuple is a key-value pair,
+            and returns the second (value) entry of the first tuple whose key
+            contains 'field'.
 
-            @return     The list of mentor objects parsed from the input file
+            @param  propertyList    The list of key-value pairs
+            @param  field           The search key
+
+            @return The value, or None if it could not be found
         """
-        return None
+
+        try:
+            for pair in propertyList:
+                if field in pair[0].lower():
+                    return pair[1]
+            return None
+        except:
+            return None
+
