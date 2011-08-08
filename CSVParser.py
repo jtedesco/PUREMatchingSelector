@@ -1,4 +1,6 @@
 import csv
+from Mentee import Mentee
+from Mentor import Mentor
 
 __author__ = 'Jon Tedesco'
 
@@ -8,17 +10,19 @@ class CSVParser(object):
       or a list of mentees.
     """
 
-    def __init__(self, filePath, delimiter=' ', quoteCharacter='"'):
+    def __init__(self, menteeFilePath, mentorFilePath, delimiter=' ', quoteCharacter='"'):
         """
          Builds a CSV parser to parse the given file.
 
-            @param  filePath        The path to the file to parse
+            @param  menteeFilePath  The path to the file that holds mentee/applicant data
+            @param  mentor FIlePath The path to the file that holds mentor data
             @param  delimeter       The delimeter between data entries
             @param  quoteCharacter  The character to create quotation marks
         """
 
-        # Open the file for reading
-        self.csvFile = csv.reader(open(filePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
+        # Open the files for reading
+        self.menteeCsvFile = csv.reader(open(menteeFilePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
+        self.mentorCsvFile = csv.reader(open(mentorFilePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
 
 
     def parseMentorsAndMentees(self):
@@ -31,6 +35,7 @@ class CSVParser(object):
         """
 
 
+
     def parseMentees(self):
         """
          From the input file, build the list of mentee objects (without the mentor objects).
@@ -39,7 +44,7 @@ class CSVParser(object):
         """
 
         # Build a dictionary of mentee data, indexed by netid
-        menteesData = self.parseCSV()
+        menteesData = self.parseCSV(self.menteeCsvFile)
 
         # A list of mentee objects
         mentees = []
@@ -47,12 +52,25 @@ class CSVParser(object):
         for netId in menteesData:
 
             # Get the data for this mentee
-            firstName = self.findField(menteesData, 'first name')
-            lastName = self.findField(menteesData, 'last name')
-            gpa = self.findField(menteesData, 'gpa')
+            firstName = self.findField(menteesData[netId], 'first name')
+            lastName = self.findField(menteesData[netId], 'last name')
+            gpa = self.findField(menteesData[netId], 'gpa')
+            year = self.parseMultipleChoice(menteesData[netId], ['freshman', 'sophomore', 'junior', 'senior'])
+            email = netId + '@illinois.edu'
+            first_choice = self.findField(menteesData[netId], 'first choice')
+            second_choice = self.findField(menteesData[netId], 'second choice')
 
-#            newMentee = Mentee()
+            # Create a list of mentor names for now
+            if len(first_choice) > 0 and len(second_choice) > 0:
+                mentors = [first_choice, second_choice]
+            elif len(first_choice) > 0:
+                mentors = [first_choice]
+            else:
+                mentors = []
 
+            # Create the mentee object and add it to our list
+            newMentee = Mentee(netId, firstName, lastName, year, email, gpa, mentors)
+            mentees.append(newMentee)
 
         return mentees
 
@@ -63,10 +81,29 @@ class CSVParser(object):
 
             @return     The list of mentor objects parsed from the input file
         """
-        return None
+
+        # Build a dictionary of mentee data, indexed by netid
+        mentorsData = self.parseCSV(self.mentorCsvFile)
+
+        # A list of mentor objects
+        mentors = []
+        
+        for netId in mentorsData:
+            
+            # Get the data for this mentor
+            firstName = self.findField(mentorsData[netId], 'first name')
+            lastName = self.findField(mentorsData[netId], 'last name')
+            email = netId + '@illinois.edu'
+            numberOfMenteesWanted = self.findField(mentorsData[netId], 'number')
+
+            # Build this mentee object and add it to our list
+            newMentor = Mentor(firstName, lastName, email, numberOfMenteesWanted)
+            mentors.append(newMentor)
+
+        return mentors
 
 
-    def parseCSV(self):
+    def parseCSV(self, csvFile):
         """
          Parses a CSV and returns a dictionary of mentors or mentees, indexed by
             netid.
@@ -76,10 +113,9 @@ class CSVParser(object):
 
         objects = {}
 
-        # Grab the fields for a mentee out of the first row of the spreadsheet
-        fields = None
-        for row in self.csvFile:
-            fields = []
+        # Grab the fields for a mentee out of the first row of the spreadshee
+        fields = []
+        for row in csvFile:
             for value in row:
                 if value.startswith("Q"):
                     fields += [value.split(":")[1]]
@@ -89,7 +125,7 @@ class CSVParser(object):
 
         # Iterate through the rows of the csv
         rowIndex = 0
-        for row in self.csvFile:
+        for row in csvFile:
             # For keeping track of the mentee we're currently building
             cellIndex = 0
             netId = None
@@ -111,7 +147,7 @@ class CSVParser(object):
 
         return objects
 
-    
+
 
     def findField(self, propertyList, field):
         """
@@ -130,6 +166,27 @@ class CSVParser(object):
                 if field in pair[0].lower():
                     return pair[1]
             return None
-        except:
+        except Exception:
             return None
 
+
+    def parseMultipleChoice(self, propertyList, choices):
+        """
+         Loops througha  list of tuples, where each tuple is a key-value pair, and
+            returns the value of whichever fields value (of the choices) is 1. This
+            would be used for parsing the responses to a multiple choice question.
+
+            @param  propertyList    The list of key-value pairs
+            @param  choices         The field keys consisting of the choices
+
+            @return The value
+        """
+
+        try:
+            for pair in propertyList:
+                for choice in choices:
+                    if choice in pair[0] and pair[1] == "1":
+                        return pair[0]
+            return None
+        except Exception:
+            return None
