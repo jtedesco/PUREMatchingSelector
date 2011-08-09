@@ -1,13 +1,16 @@
 from pprint import pprint
 from CSVParser import CSVParser
+from Matcher import Matcher
 
 __author__ = 'jtedesco'
 
 
-# Parse the mentees out of it
-parser = CSVParser("/home/jtedesco/Desktop/sp11PUREapplicants.csv", "/home/jtedesco/Desktop/sp11PUREmentors.csv", ',', '"')
-applicants = parser.parseMentees()
-mentors = parser.parseMentors()
+# Parse the mentees & mentors out of it
+applicantFile = "/home/jtedesco/Desktop/sp11PUREapplicants.csv"
+mentorFile = "/home/jtedesco/Desktop/sp11PUREmentors.csv"
+parser = CSVParser(applicantFile, mentorFile, ',', '"')
+mentees, mentors = parser.parseMentorsAndMentees()
 
-pprint(applicants)
-pprint(mentors)
+# Perform the matching on the mentors & mentees
+matcher = Matcher(mentors, mentees)
+matching = matcher.generateMenteeMentorMatching()

@@ -36,6 +36,32 @@ class CSVParser(object):
                 2)  The list of mentors parsed from the input file
         """
 
+        # Parse the mentors and mentees individually
+        mentees = self.parseMentees()
+        mentors = self.parseMentors()
+
+        # Parse each mentor's mentee list into actual mentee objects
+        for mentor in mentors:
+            newMentees = []
+            for oldMentee in mentor.menteesWanted:
+                for mentee in mentees:
+                    if len(oldMentee)>0 and mentee.firstName == oldMentee.split()[0] and mentee.lastName == oldMentee.split()[1]:
+                        newMentees.append(mentee)
+            mentor.menteesWanted = newMentees
+
+
+        # Parse out each mentee's mentor list into actual mentor objects
+        for mentee in mentees:
+            newMentors = []
+            for oldMentor in mentee.mentors:
+                for mentor in mentors:
+                    if len(oldMentor)>0 and mentor.firstName == oldMentor.split()[0] and mentor.lastName == oldMentor.split()[1]:
+                        newMentors.append(mentor)
+            mentee.mentors = newMentors
+
+        return mentees, mentors
+
+
 
 
     def parseMentees(self):
