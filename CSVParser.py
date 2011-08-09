@@ -21,8 +21,10 @@ class CSVParser(object):
         """
 
         # Open the files for reading
-        self.menteeCsvFile = csv.reader(open(menteeFilePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
-        self.mentorCsvFile = csv.reader(open(mentorFilePath, 'rb'), delimiter=delimiter, quotechar=quoteCharacter)
+        self.delimiter = delimiter
+        self.quoteCharacter = quoteCharacter
+        self.menteeCsvFile = open(menteeFilePath, 'rb')
+        self.mentorCsvFile = open(mentorFilePath, 'rb')
 
 
     def parseMentorsAndMentees(self):
@@ -40,7 +42,7 @@ class CSVParser(object):
         """
          From the input file, build the list of mentee objects (without the mentor objects).
 
-            @return
+            @return The list of mentees
         """
 
         # Build a dictionary of mentee data, indexed by netid
@@ -61,18 +63,18 @@ class CSVParser(object):
             second_choice = self.findField(menteesData[netId], 'second choice')
 
             # Create a list of mentor names for now
-            if len(first_choice) > 0 and len(second_choice) > 0:
-                mentors = [first_choice, second_choice]
-            elif len(first_choice) > 0:
-                mentors = [first_choice]
-            else:
-                mentors = []
+            mentors = [first_choice, second_choice]
+            try:
+                mentors.remove('')
+            except:
+                pass
 
             # Create the mentee object and add it to our list
             newMentee = Mentee(netId, firstName, lastName, year, email, gpa, mentors)
             mentees.append(newMentee)
 
         return mentees
+
 
 
     def parseMentors(self):
@@ -95,12 +97,21 @@ class CSVParser(object):
             lastName = self.findField(mentorsData[netId], 'last name')
             email = netId + '@illinois.edu'
             numberOfMenteesWanted = self.findField(mentorsData[netId], 'number')
+            firstChoice = self.findField(mentorsData[netId], 'first choice')
+            secondChoice = self.findField(mentorsData[netId], 'second choice')
+            thirdChoice = self.findField(mentorsData[netId], 'third choice')
 
             # Build this mentee object and add it to our list
-            newMentor = Mentor(firstName, lastName, email, numberOfMenteesWanted)
+            menteesWanted = [firstChoice, secondChoice, thirdChoice]
+            try:
+                menteesWanted.remove('')
+            except:
+                pass
+            newMentor = Mentor(firstName, lastName, email, numberOfMenteesWanted, menteesWanted)
             mentors.append(newMentor)
 
         return mentors
+
 
 
     def parseCSV(self, csvFile):
@@ -111,17 +122,20 @@ class CSVParser(object):
             @return The parsed data
         """
 
+        csvObject = csv.reader(csvFile, delimiter=self.delimiter, quotechar=self.quoteCharacter)
         objects = {}
 
         # Grab the fields for a mentee out of the first row of the spreadshee
         fields = []
-        for row in csvFile:
+        for row in csvObject:
             for value in row:
                 if value.startswith("Q"):
                     fields += [value.split(":")[1]]
                 else:
                     fields += [value]
             break
+        csvFile.seek(0)
+        csvFile = csv.reader(csvFile, delimiter=self.delimiter, quotechar=self.quoteCharacter)
 
         # Iterate through the rows of the csv
         rowIndex = 0
