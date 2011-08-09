@@ -84,7 +84,7 @@ class Matcher(object):
                     # Case where we have no conflict, add him to this matching
                     nextMenteeWanted = mentor.menteesWanted[0]
                     if nextMenteeWanted not in assignedMentees:
-                        assignedMentees.append(mentor.menteesWanted)
+                        assignedMentees.append(nextMenteeWanted)
                         mentor.menteesWanted.remove(nextMenteeWanted)
                         mentor.mentees.append(nextMenteeWanted)
 
@@ -102,7 +102,7 @@ class Matcher(object):
                         # Remove him from the queue of mentees to try to match to this mentor
                         mentor.mentesWanted.remove(nextMenteeWanted)
 
-        return None
+        return self.mentees, self.mentors
 
 
     def isComplete(self):
@@ -127,7 +127,7 @@ class Matcher(object):
         """
          Helper function that determines whether a mentor wants more mentees or not
         """
-        return (mentor.numberOfMenteesWanted > len(mentor.mentees)) and (len(self.menteesInterestedInMentors[mentor]) > 0)
+        return len(mentor.menteesWanted) > 0 and mentor.numberOfMenteesWanted > len(mentor.mentees) and len(self.menteesInterestedInMentors[mentor]) > 0
 
     
     def findMentorWhoHasMentee(self, mentee):

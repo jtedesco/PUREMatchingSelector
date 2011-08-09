@@ -82,7 +82,10 @@ class CSVParser(object):
             # Get the data for this mentee
             firstName = self.findField(menteesData[netId], 'first name')
             lastName = self.findField(menteesData[netId], 'last name')
-            gpa = self.findField(menteesData[netId], 'gpa')
+            try:
+                gpa = float(self.findField(menteesData[netId], 'gpa'))
+            except Exception:
+                gpa = 0
             year = self.parseMultipleChoice(menteesData[netId], ['freshman', 'sophomore', 'junior', 'senior'])
             email = netId + '@illinois.edu'
             first_choice = self.findField(menteesData[netId], 'first choice')
@@ -92,7 +95,7 @@ class CSVParser(object):
             mentors = [first_choice, second_choice]
             try:
                 mentors.remove('')
-            except:
+            except Exception:
                 pass
 
             # Create the mentee object and add it to our list
@@ -122,7 +125,7 @@ class CSVParser(object):
             firstName = self.findField(mentorsData[netId], 'first name')
             lastName = self.findField(mentorsData[netId], 'last name')
             email = netId + '@illinois.edu'
-            numberOfMenteesWanted = self.findField(mentorsData[netId], 'number')
+            numberOfMenteesWanted = int(self.findField(mentorsData[netId], 'number'))
             firstChoice = self.findField(mentorsData[netId], 'first choice')
             secondChoice = self.findField(mentorsData[netId], 'second choice')
             thirdChoice = self.findField(mentorsData[netId], 'third choice')
