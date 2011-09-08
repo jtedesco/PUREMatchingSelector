@@ -14,5 +14,3 @@ mentees, mentors = parser.parseMentorsAndMentees()
 # Perform the matching on the mentors & mentees
 matcher = Matcher(mentors, mentees)
 mentees, mentors = matcher.generateMenteeMentorMatching()
-
-pass
