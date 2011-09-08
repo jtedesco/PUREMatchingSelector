@@ -92,7 +92,7 @@ class CSVParser(object):
             second_choice = self.findField(menteesData[netId], 'second choice')
 
             # Create a list of mentor names for now
-            mentors = [first_choice, second_choice]
+            mentors = [first_choice.title(), second_choice.title()]
             try:
                 mentors.remove('')
             except Exception:
@@ -119,19 +119,28 @@ class CSVParser(object):
         # A list of mentor objects
         mentors = []
         
-        for netId in mentorsData:
+        for name in mentorsData:
             
             # Get the data for this mentor
-            firstName = self.findField(mentorsData[netId], 'first name')
-            lastName = self.findField(mentorsData[netId], 'last name')
-            email = netId + '@illinois.edu'
-            numberOfMenteesWanted = int(self.findField(mentorsData[netId], 'number'))
-            firstChoice = self.findField(mentorsData[netId], 'first choice')
-            secondChoice = self.findField(mentorsData[netId], 'second choice')
-            thirdChoice = self.findField(mentorsData[netId], 'third choice')
+            firstName = name.split()[0].strip().title()
+            try:
+                lastName = name.split()[1].strip().title()
+            except IndexError:
+                lastName = ""
+            email = self.findField(mentorsData[name], 'email')
+            numberOfMenteesWanted = int(self.findField(mentorsData[name], 'how many'))
+            firstChoice = self.findField(mentorsData[name], 'first choice')
+            secondChoice = self.findField(mentorsData[name], 'second choice')
+            thirdChoice = self.findField(mentorsData[name], 'third choice')
 
             # Build this mentee object and add it to our list
-            menteesWanted = [firstChoice, secondChoice, thirdChoice]
+            menteesWanted = []
+            if firstChoice is not None:
+                menteesWanted.append(firstChoice)
+            if secondChoice is not None:
+                menteesWanted.append(secondChoice)
+            if thirdChoice is not None:
+                menteesWanted.append(thirdChoice)
             try:
                 menteesWanted.remove('')
             except:
