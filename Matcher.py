@@ -1,3 +1,6 @@
+import csv
+from CSVParser import CSVParser
+
 __author__ = 'Jon Tedesco'
 
 class Matcher(object):
@@ -51,6 +54,53 @@ class Matcher(object):
             @return         The list of mentors chosen by this mentee
         """
         return mentee.mentors
+
+
+    def generateMentorApplicantLists(self, outputFolderPath, applicantCsvFilePath):
+        """
+          Generates the lists of applicants for each mentor, and outputs the CSV files of applicant data in the given
+            output folder. Each file will be named <code>firstName_lastName.csv</code>.
+
+            @param  outputFolderPath        The path to the folder in which to output the CSV files
+            @param  applicantCsvFilePath
+        """
+
+        applicants = []
+        for mentor in self.menteesInterestedInMentors:
+            for applicant in self.menteesInterestedInMentors[mentor]:
+                applicants.append(applicant)
+
+        # Add a field that contains the csv row for each applicant\
+        count = 0
+        titleRow = None
+        for applicant in applicants:
+            parser = csv.reader(open(applicantCsvFilePath, 'rb'))
+            for row in parser:
+                if titleRow is None:
+                    titleRow = row
+                else:
+                    for value in row:
+                        if applicant.netId in value:
+                            applicant.row = row
+
+        if outputFolderPath[-1] != '/':
+            outputFolderPath += '/'
+
+        # For each mentor, generate CSV file
+
+        for mentor in self.menteesInterestedInMentors:
+
+            # Open the CSV file for writing
+            mentorCsvFile = open(outputFolderPath + mentor.firstName.title() + " " + mentor.lastName.title() + ".csv", 'wb')
+            csvWriter = csv.writer(mentorCsvFile)
+
+            # Write the each mentee's data to the file
+            csvWriter.writerow(titleRow)
+            for applicant in self.menteesInterestedInMentors[mentor]:
+                csvWriter.writerow(applicant.row)
+
+            mentorCsvFile.close()
+
 
 
     def generateMenteeMentorMatching(self):
