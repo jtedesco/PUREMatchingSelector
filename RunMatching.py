@@ -2,7 +2,7 @@ from pprint import pprint
 from CSVParser import CSVParser
 from Matcher import Matcher
 
-__author__ = 'jtedesco'
+__author__ = 'Jon Tedesco'
 
 
 # Parse the mentees & mentors out of it
