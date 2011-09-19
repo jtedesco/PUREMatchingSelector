@@ -25,11 +25,11 @@ class CSVParser(object):
         self.quoteCharacter = quoteCharacter
         try:
             self.menteeCsvFile = open(menteeFilePath, 'rb')
-        except:
+        except Exception:
             self.menteeCsvFile = None
         try:
             self.mentorCsvFile = open(mentorFilePath, 'rb')
-        except:
+        except Exception:
             self.mentorCsvFile = None
 
 
@@ -60,7 +60,7 @@ class CSVParser(object):
             newMentors = []
             for oldMentor in mentee.mentors:
                 for mentor in mentors:
-                    if len(oldMentor)>0 and mentor.firstName == oldMentor.split()[0] and mentor.lastName == oldMentor.split()[1]:
+                    if len(oldMentor)>0 and (mentor.firstName.title() + ' ' + mentor.lastName.title()) == oldMentor:
                         newMentors.append(mentor)
             mentee.mentors = newMentors
 
@@ -89,7 +89,7 @@ class CSVParser(object):
                 gpa = float(self.findField(menteesData[netId], 'gpa'))
             except Exception:
                 gpa = None
-            year = self.parseMultipleChoice(menteesData[netId], ['freshman', 'sophomore', 'junior', 'senior'])
+            year = self.parseMultipleChoice(menteesData[netId], ['Freshman', 'Sophomore', 'Junior', 'Senior'])
             email = netId + '@illinois.edu'
             first_choice = self.findField(menteesData[netId], 'first choice')
             second_choice = self.findField(menteesData[netId], 'second choice')
@@ -126,9 +126,9 @@ class CSVParser(object):
             # Get the data for this mentor
             firstNameArray = name.split()[0:-1]
             firstName = ""
-            for nameEntry in firstNameArray:
-                firstName += nameEntry.title() + ' '
-            firstName = firstName.rstrip()
+            for firstNameEntry in firstNameArray:
+                firstName += firstNameEntry + ' '
+            firstName = firstName.rstrip().title()
             lastName = name.split()[-1].strip().title()
             email = self.findField(mentorsData[name], 'email')
             numberOfMenteesWanted = self.findField(mentorsData[name], 'number of mentees')
@@ -165,7 +165,7 @@ class CSVParser(object):
                 menteesWanted.append(mentee8)
             try:
                 menteesWanted.remove('')
-            except:
+            except Exception:
                 pass
             newMentor = Mentor(firstName, lastName, email, numberOfMenteesWanted, menteesWanted)
             mentors.append(newMentor)

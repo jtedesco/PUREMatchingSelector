@@ -1,5 +1,6 @@
 import csv
 from CSVParser import CSVParser
+from Matching import Matching
 
 __author__ = 'Jon Tedesco'
 
@@ -112,8 +113,6 @@ class Matcher(object):
              <li> In the event that the sets of students given to each mentor overlap, the mentor with fewer applicants
                     wins the tie.
             </ul>
-
-            @return a <code>Matching</code> object that contains the matching generated
         """
 
         # Create a dictionary for the mentors that will hold the number of mentees assigned to each mentor in this matching
@@ -123,6 +122,7 @@ class Matcher(object):
 
         # While this matching is not complete, continue matching
         assignedMentees = []
+        wasComplete = self.isComplete()
         while not self.isComplete():
 
             # Greedily try to assign mentees to mentors, and fix conflicts if we find them
@@ -152,8 +152,14 @@ class Matcher(object):
                         # Remove him from the queue of mentees to try to match to this mentor
                         mentor.menteesWanted.remove(nextMenteeWanted)
 
-        return self.mentees, self.mentors
+        # Generate the matching object (if it was not already generated)
+        self.matching = Matching(self.mentees, self.mentors)
+        return self.matching
 
+    def getUnmatchedMentees(self):
+        """
+         Returns the mentees that were not matched
+        """
 
     def isComplete(self):
         """
