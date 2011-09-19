@@ -51,7 +51,7 @@ class CSVParser(object):
             newMentees = []
             for oldMentee in mentor.menteesWanted:
                 for mentee in mentees:
-                    if len(oldMentee)>0 and mentee.firstName == oldMentee.split()[0] and mentee.lastName == oldMentee.split()[1]:
+                    if len(oldMentee)>0 and (mentee.firstName.title() + ' ' + mentee.lastName.title()) == oldMentee:
                         newMentees.append(mentee)
             mentor.menteesWanted = newMentees
 
@@ -83,12 +83,12 @@ class CSVParser(object):
         for netId in menteesData:
 
             # Get the data for this mentee
-            firstName = self.findField(menteesData[netId], 'first name')
-            lastName = self.findField(menteesData[netId], 'last name')
+            firstName = self.findField(menteesData[netId], 'first name').title()
+            lastName = self.findField(menteesData[netId], 'last name').title()
             try:
                 gpa = float(self.findField(menteesData[netId], 'gpa'))
             except Exception:
-                gpa = 0
+                gpa = None
             year = self.parseMultipleChoice(menteesData[netId], ['freshman', 'sophomore', 'junior', 'senior'])
             email = netId + '@illinois.edu'
             first_choice = self.findField(menteesData[netId], 'first choice')
@@ -103,12 +103,6 @@ class CSVParser(object):
 
             # Create the mentee object and add it to our list
             newMentee = Mentee(netId, firstName, lastName, year, email, gpa, mentors)
-#            newMentee.data = {}
-#            for field in menteesData[netId]:
-#                if 'gpa' not in field[0] and 'first name' not in field[0] and 'last name' \
-#                    and field[0] not in ['freshman', 'sophomore', 'junior', 'senior']  \
-#                    and 'first choice' not in field[0] and 'second choice':
-#                    newMentee.data[field[0]] = field[1]
             mentees.append(newMentee)
 
         return mentees
@@ -130,28 +124,45 @@ class CSVParser(object):
         for name in mentorsData:
             
             # Get the data for this mentor
-            firstName = name.split()[0].strip().title()
-            try:
-                lastName = name.split()[1].strip().title()
-            except IndexError:
-                lastName = ""
+            firstNameArray = name.split()[0:-1]
+            firstName = ""
+            for nameEntry in firstNameArray:
+                firstName += nameEntry.title() + ' '
+            firstName = firstName.rstrip()
+            lastName = name.split()[-1].strip().title()
             email = self.findField(mentorsData[name], 'email')
-            if self.findField(mentorsData[name], 'how many') is not None:
-                numberOfMenteesWanted = int(self.findField(mentorsData[name], 'how many'))
+            numberOfMenteesWanted = self.findField(mentorsData[name], 'number of mentees')
+            if numberOfMenteesWanted is not None and len(numberOfMenteesWanted) > 0 :
+                numberOfMenteesWanted = int(numberOfMenteesWanted)
             else:
                 numberOfMenteesWanted = None
-            firstChoice = self.findField(mentorsData[name], 'first choice')
-            secondChoice = self.findField(mentorsData[name], 'second choice')
-            thirdChoice = self.findField(mentorsData[name], 'third choice')
+            mentee1 = self.findField(mentorsData[name], 'mentee 1')
+            mentee2 = self.findField(mentorsData[name], 'mentee 2')
+            mentee3 = self.findField(mentorsData[name], 'mentee 3')
+            mentee4 = self.findField(mentorsData[name], 'mentee 4')
+            mentee5 = self.findField(mentorsData[name], 'mentee 5')
+            mentee6 = self.findField(mentorsData[name], 'mentee 6')
+            mentee7 = self.findField(mentorsData[name], 'mentee 7')
+            mentee8 = self.findField(mentorsData[name], 'mentee 8')
 
             # Build this mentee object and add it to our list
             menteesWanted = []
-            if firstChoice is not None:
-                menteesWanted.append(firstChoice)
-            if secondChoice is not None:
-                menteesWanted.append(secondChoice)
-            if thirdChoice is not None:
-                menteesWanted.append(thirdChoice)
+            if mentee1 is not None and len(mentee1) > 0:
+                menteesWanted.append(mentee1)
+            if mentee2 is not None and len(mentee2) > 0:
+                menteesWanted.append(mentee2)
+            if mentee3 is not None and len(mentee3) > 0:
+                menteesWanted.append(mentee3)
+            if mentee4 is not None and len(mentee4) > 0:
+                menteesWanted.append(mentee4)
+            if mentee5 is not None and len(mentee5) > 0:
+                menteesWanted.append(mentee5)
+            if mentee6 is not None and len(mentee6) > 0:
+                menteesWanted.append(mentee6)
+            if mentee7 is not None and len(mentee7) > 0:
+                menteesWanted.append(mentee7)
+            if mentee8 is not None and len(mentee8) > 0:
+                menteesWanted.append(mentee8)
             try:
                 menteesWanted.remove('')
             except:
