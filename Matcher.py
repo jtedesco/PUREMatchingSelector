@@ -150,7 +150,7 @@ class Matcher(object):
                             otherMentor.mentees.remove(nextMenteeWanted)
 
                         # Remove him from the queue of mentees to try to match to this mentor
-                        mentor.mentesWanted.remove(nextMenteeWanted)
+                        mentor.menteesWanted.remove(nextMenteeWanted)
 
         return self.mentees, self.mentors
 
