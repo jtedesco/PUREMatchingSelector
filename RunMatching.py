@@ -26,9 +26,14 @@ print "Matching:"
 for mentor in matchedMentors:
     print '\t' + mentor.firstName + ' ' + mentor.lastName
     for mentee in mentor.mentees:
-        print '\t\t' + mentee.firstName + ' ' + mentee.lastName + '(' + mentee.email + ')'
+        print '\t\t' + mentee.firstName + ' ' + mentee.lastName + ' (' + mentee.email + ')'
 print
 
 print "Unmatched Mentees:"
 for mentee in unmatchedMentees:
-    print '\t' + mentee.firstName + ' ' + mentee.lastName + '(' + mentee.email + ')'
+    print '\t' + mentee.firstName + ' ' + mentee.lastName + ' (' + mentee.email + ')'
+print
+
+print "Unmatched Mentors:"
+for mentor in unmatchedMentors:
+    print '\t' + mentor.firstName + ' ' + mentor.lastName
