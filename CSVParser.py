@@ -43,8 +43,8 @@ class CSVParser(object):
         """
 
         # Parse the mentors and mentees individually
-        mentees = self.parseMentees()
         mentors = self.parseMentors()
+        mentees = self.parseMentees(mentors)
 
         # Parse each mentor's mentee list into actual mentee objects
         for mentor in mentors:
@@ -55,21 +55,14 @@ class CSVParser(object):
                         newMentees.append(mentee)
             mentor.menteesWanted = newMentees
 
-        # Parse out each mentee's mentor list into actual mentor objects
-        for mentee in mentees:
-            newMentors = []
-            for oldMentor in mentee.mentors:
-                for mentor in mentors:
-                    if len(oldMentor)>0 and (mentor.firstName.title() + ' ' + mentor.lastName.title()) == oldMentor:
-                        newMentors.append(mentor)
-            mentee.mentors = newMentors
-
         return mentees, mentors
 
 
-    def parseMentees(self):
+    def parseMentees(self, mentors):
         """
          From the input file, build the list of mentee objects (without the mentor objects).
+
+            @param  mentors a list of mentor objects, so that we can detect if
 
             @return The list of mentees
         """
@@ -83,26 +76,26 @@ class CSVParser(object):
         for netId in menteesData:
 
             # Get the data for this mentee
-            firstName = self.findField(menteesData[netId], 'first name').title()
-            lastName = self.findField(menteesData[netId], 'last name').title()
+            data = menteesData[netId]
+            firstName = self.findField(data, 'first name').title()
+            lastName = self.findField(data, 'last name').title()
             try:
-                gpa = float(self.findField(menteesData[netId], 'gpa'))
+                gpa = float(self.findField(data, 'gpa'))
             except Exception:
                 gpa = None
-            year = self.parseMultipleChoice(menteesData[netId], ['Freshman', 'Sophomore', 'Junior', 'Senior'])
+            year = self.parseMultipleChoice(data, ['Freshman', 'Sophomore', 'Junior', 'Senior'])
             email = netId + '@illinois.edu'
-            first_choice = self.findField(menteesData[netId], 'first choice')
-            second_choice = self.findField(menteesData[netId], 'second choice')
 
             # Create a list of mentor names for now
-            mentors = [first_choice.title(), second_choice.title()]
-            try:
-                mentors.remove('')
-            except Exception:
-                pass
+            selectedMentors = []
+            for mentor in mentors:
+                mentorName = mentor.firstName + ' ' + mentor.lastName
+                mentorSelectionData = self.findField(data, mentorName.lower())
+                if mentorSelectionData and int(mentorSelectionData) == 1:
+                    selectedMentors.append(mentor)
 
             # Create the mentee object and add it to our list
-            newMentee = Mentee(netId, firstName, lastName, year, email, gpa, mentors)
+            newMentee = Mentee(netId, firstName, lastName, year, email, gpa, selectedMentors)
             mentees.append(newMentee)
 
         return mentees
