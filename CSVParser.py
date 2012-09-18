@@ -90,7 +90,7 @@ class CSVParser(object):
             selectedMentors = []
             for mentor in mentors:
                 mentorName = mentor.firstName + ' ' + mentor.lastName
-                mentorSelectionData = self.findField(data, mentorName.lower())
+                mentorSelectionData = self.findField(data, mentorName.lower(), True)
                 if mentorSelectionData and int(mentorSelectionData) == 1:
                     selectedMentors.append(mentor)
 
@@ -214,7 +214,7 @@ class CSVParser(object):
         return objects
 
 
-    def findField(self, propertyList, field):
+    def findField(self, propertyList, field, isBoolean = False):
         """
          Loops through a list of tuples, where each tuple is a key-value pair,
             and returns the second (value) entry of the first tuple whose key
@@ -222,15 +222,25 @@ class CSVParser(object):
 
             @param  propertyList    The list of key-value pairs
             @param  field           The search key
+            @param  isBoolean       Setting this flag will cause this method to try to parse "0" and "1" as True/False,
+                                    but continue to look for "True" columns until one is found or we run out of columns
 
             @return The value, or None if it could not be found
         """
 
         try:
-            for pair in propertyList:
-                if field in pair[0].lower():
-                    return pair[1]
-            return None
+
+            if isBoolean:
+                for pair in propertyList:
+                    if field in pair[0].lower() and int(pair[1]):
+                        return pair[1]
+                return None
+
+            else:
+                for pair in propertyList:
+                    if field in pair[0].lower():
+                        return pair[1]
+                return None
         except Exception:
             return None
 
