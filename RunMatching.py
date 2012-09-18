@@ -6,8 +6,8 @@ __author__ = 'Jon Tedesco'
 
 
 # Parse the mentees & mentors out of it
-applicantFile = "/home/jon/Desktop/mentees.csv"
-mentorFile = "/home/jon/Desktop/mentors.csv"
+applicantFile = "/Users/jontedesco/Desktop/mentees.csv"
+mentorFile = "/Users/jontedesco/Desktop/mentors.csv"
 parser = CSVParser(applicantFile, mentorFile, ',', '"')
 mentees, mentors = parser.parseMentorsAndMentees()
 

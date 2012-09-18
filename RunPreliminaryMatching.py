@@ -1,4 +1,3 @@
-from pprint import pprint
 from CSVParser import CSVParser
 from Matcher import Matcher
 
@@ -6,11 +5,11 @@ __author__ = 'jtedesco'
 
 
 # Parse the mentees & mentors out of it
-applicantFile = "/home/jon/Desktop/Mentees.csv"
-mentorFile = "/home/jon/Desktop/Mentors.csv"
+applicantFile = "/Users/jontedesco/Desktop/mentees.csv"
+mentorFile = "/Users/jontedesco/Desktop/mentors.csv"
 parser = CSVParser(applicantFile, mentorFile, ',', '"')
 mentees, mentors = parser.parseMentorsAndMentees()
 
 # Generate the output files for each mentor
 matcher = Matcher(mentors, mentees)
-matcher.generateMentorApplicantLists("/home/jon/Desktop/Mentor Lists/", applicantFile)
+matcher.generateMentorApplicantLists("/Users/jontedesco/Desktop/Mentor Lists/", applicantFile)
