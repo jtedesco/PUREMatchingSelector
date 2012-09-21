@@ -81,7 +81,8 @@ This script is used in two stages:
                 <td>Mentor Y</td> <td>1</td> <td>student1</td> <td>student2<td>
             </tr>
         </table>
-        <br/>
+
+        Note that a mentor can have any number of applicants
 
     *   The mentee application file
 
