@@ -8,7 +8,9 @@ in engineering at UIUC. To learn more about the PURE program, see https://wiki.e
 
 This script is used in two stages:
 
-1.  The preliminary matching stage, where mentors are paired with all mentees that applied to him / her.
+<ol>
+<li>
+    The preliminary matching stage, where mentors are paired with all mentees that applied to him / her.
 
     ## Input
 
@@ -53,7 +55,8 @@ This script is used in two stages:
     The output for the prelimary stage will be in a folder specified by the user, where a CSV will generated for each mentor,
     showing the list of students who applied to him / her and their application information.
 
-2.  The final matching stage, where the actual matching is performed, given the preference lists for both mentors and mentees.
+</li>
+<li>  The final matching stage, where the actual matching is performed, given the preference lists for both mentors and mentees.
 
     To generate the mentor / mentee matchings, run the <tt>RunMatching.py</tt> script. This expects two CSV input files:
 
@@ -94,7 +97,8 @@ This script is used in two stages:
     ## Output
 
     Once a matching has been found, the script will simply output the matching via the console.
-
+</li>
+</ol>
 
 # Requirements
 
