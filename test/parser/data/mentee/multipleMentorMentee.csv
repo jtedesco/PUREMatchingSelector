@@ -1,0 +1,4 @@
+UserId,Submitted On,Q1: First Name,Q2:Last Name,Q3:Freshman,Q3:Sophomore,Q3:Junior,Q3:First Year Transfer,Q6:GPA,Q14:Mentor A,Q14: Mentor B,Q14: Mentor C, Q15:Mentor A,Q15: Mentor B,Q15: Mentor C
+user1@illinois.edu,09/13/2012,John,Smith,1,0,0,0,3.76,1,0,0,0,1,0
+user2@illinois.edu,09/13/2012,Joe,Smith,0,1,0,0,2.76,0,0,1,0,0,0
+user3@illinois.edu,09/13/2012,James,Smith,0,0,0,1,3.42,0,1,0,0,0,1

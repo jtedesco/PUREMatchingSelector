@@ -71,13 +71,14 @@ class CSVParser(object):
 
             # Get the data for this mentee
             data = menteesData[netId]
+
             firstName = self.findField(data, 'first name').title()
             lastName = self.findField(data, 'last name').title()
             try:
                 gpa = float(self.findField(data, 'gpa'))
             except Exception:
                 gpa = None
-            year = self.parseMultipleChoice(data, ['Freshman', 'Sophomore', 'Junior', 'Senior'])
+            year = self.parseMultipleChoice(data, ['freshman', 'sophomore', 'junior', 'senior', 'first year transfer'])
             email = netId + '@illinois.edu'
 
             # Create a list of mentor names for now
@@ -241,7 +242,7 @@ class CSVParser(object):
 
     def parseMultipleChoice(self, propertyList, choices):
         """
-         Loops througha  list of tuples, where each tuple is a key-value pair, and
+         Loops through a list of tuples, where each tuple is a key-value pair, and
             returns the value of whichever fields value (of the choices) is 1. This
             would be used for parsing the responses to a multiple choice question.
 
@@ -255,7 +256,7 @@ class CSVParser(object):
             for pair in propertyList:
                 for choice in choices:
                     if choice in pair[0] and pair[1] == "1":
-                        return pair[0]
+                        return pair[0].title()
             return None
         except Exception:
             return None
