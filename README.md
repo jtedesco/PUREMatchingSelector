@@ -13,7 +13,7 @@ This script is used in two stages:
     ## Input
 
     To generate the lists of mentees assigned to mentors, run the <tt>RunPreliminaryMatching.py</tt> script. This expects two
-    CSV input files:
+    CSV input files
 
     * The mentor file
 
