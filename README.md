@@ -9,13 +9,13 @@ in engineering at UIUC. To learn more about the PURE program, see https://wiki.e
 This script is used in two stages:
 
 <ol>
-<li>
+<li><br/>
     The preliminary matching stage, where mentors are paired with all mentees that applied to him / her.
 
-    <h2>Input</h2>
+    <h3>Input</h3>
 
     To generate the lists of mentees assigned to mentors, run the <tt>RunPreliminaryMatching.py</tt> script. This expects two
-    CSV input files
+    CSV input files:
 
     <ul>
     <li>
@@ -57,14 +57,17 @@ Mentor Y
     </li>
     </ul>
 
-    <h2>Output</h2>
+    <h3>Output</h3>
 
     The output for the prelimary stage will be in a folder specified by the user, where a CSV will generated for each mentor,
     showing the list of students who applied to him / her and their application information.<br/><br/>
 
 </li>
-<li>
+<li><br/>
+
     The final matching stage, where the actual matching is performed, given the preference lists for both mentors and mentees.
+
+    <h3>Input</h3>
 
     To generate the mentor / mentee matchings, run the <tt>RunMatching.py</tt> script. This expects two CSV input files:
 
@@ -98,7 +101,7 @@ Mentor Y
     </li>
     </ul>
 
-    <h2>Matching Process</h2>
+    <h3>Matching Process</h3>
 
     This is the core of the application, which pairs up mentors and mentees given their mutual preference lists. The
     matching will strive for a maximum matching on the data, and satisfy mentor preference lists wherever possible.
@@ -112,7 +115,7 @@ Mentor Y: student2</pre>
     pairing <i>Mentor Y</i> with <i>student1</i> would have resulted in a smaller matching, since <i>Mentor X</i> would
     have been unmatched.
 
-    <h2>Output</h2>
+    <h3>Output</h3>
 
     Once a matching has been found, the script will simply output the matching via the console.
 </li>
