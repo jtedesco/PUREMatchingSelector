@@ -26,6 +26,10 @@ class CSVParser(object):
         self.menteeCsvFile = open(menteeFilePath, 'r')
         self.mentorCsvFile = open(mentorFilePath, 'r')
 
+        # Calculate mentors & mentees lazily
+        self.mentors = None
+        self.mentees = None
+
 
     def parseMentorsAndMentees(self):
         """
@@ -37,19 +41,21 @@ class CSVParser(object):
         """
 
         # Parse the mentors and mentees individually
-        mentors = self.parseMentors()
-        mentees = self.parseMentees(mentors)
+        if self.mentors is None:
+            self.mentors = self.parseMentors()
+        if self.mentees is None:
+            self.mentees = self.parseMentees(self.mentors)
 
         # Parse each mentor's mentee list into actual mentee objects
-        for mentor in mentors:
+        for mentor in self.mentors:
             newMentees = []
-            for oldMentee in mentor.menteesWanted:
-                for mentee in mentees:
-                    if len(oldMentee)>0 and (mentee.firstName.title() + ' ' + mentee.lastName.title()) == oldMentee:
+            for menteeName in mentor.menteesWanted:
+                for mentee in self.mentees:
+                    if len(menteeName)>0 and (mentee.firstName.title() + ' ' + mentee.lastName.title()) == menteeName:
                         newMentees.append(mentee)
             mentor.menteesWanted = newMentees
 
-        return mentees, mentors
+        return self.mentees, self.mentors
 
 
     def parseMentees(self, mentors):
@@ -93,7 +99,8 @@ class CSVParser(object):
             newMentee = Mentee(netId, firstName, lastName, year, email, gpa, selectedMentors)
             mentees.append(newMentee)
 
-        return mentees
+        self.mentees = mentees
+        return self.mentees
 
 
     def parseMentors(self):
@@ -158,7 +165,8 @@ class CSVParser(object):
             newMentor = Mentor(firstName, lastName, email, numberOfMenteesWanted, menteesWanted)
             mentors.append(newMentor)
 
-        return mentors
+        self.mentors = mentors
+        return self.mentors
 
 
     def parseCSV(self, csvFile):
