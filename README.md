@@ -9,7 +9,7 @@ in engineering at UIUC. To learn more about the PURE program, see https://wiki.e
 This script is used in two stages:
 
 <ol>
-<li>The preliminary matching stage, where mentors are paired with all mentees that applied to him / her.
+<li>The preliminary matching stage, where mentors are paired with all mentees that applied to him / her.<br/>
 
     <h3>Input</h3>
 
@@ -62,7 +62,7 @@ Mentor Y
     showing the list of students who applied to him / her and their application information.<br/><br/>
 
 </li>
-<li>The final matching stage, where the actual matching is performed, given the preference lists for both mentors and mentees.
+<li>The final matching stage, where the actual matching is performed, given the preference lists for both mentors and mentees.<br/>
 
     <h3>Input</h3>
 
