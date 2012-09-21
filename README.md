@@ -23,12 +23,11 @@ This script is used in two stages:
 
         Contains the names of mentors, separated on each line. Formatted as:<br/>
 
-        <pre>
-        Name
-        Mentor X
-        Mentor Y
-        ...
-        </pre>
+<pre>
+Name
+Mentor X
+Mentor Y
+...</pre>
 
         This will be parsed into two <tt>Mentor</tt> objects.<br/><br/>
     </li>
@@ -106,8 +105,10 @@ This script is used in two stages:
 
     In the above exampe, the following matching will be obtained:
 
-    > Mentor X: student1
-    > Mentor Y: student2
+    <pre>
+Mentor X: student1
+Mentor Y: student2
+    </pre>
 
     This is because, although <i>Mentor Y</i> placed <i>student1</i> above <i>student2</i> in his/her preference list,
     pairing <i>Mentor Y</i> with <i>student1</i> would have resulted in a smaller matching, since <i>Mentor X</i> would
