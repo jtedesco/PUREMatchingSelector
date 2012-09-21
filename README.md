@@ -30,7 +30,7 @@ This script is used in two stages:
         ...
         </pre>
 
-        This will be parsed into two <tt>Mentor</tt> objects.<br/>
+        This will be parsed into two <tt>Mentor</tt> objects.<br/><br/>
     </li>
     <li>
         The mentee application file<br/><br/>
@@ -61,7 +61,7 @@ This script is used in two stages:
     <h2>Output</h2>
 
     The output for the prelimary stage will be in a folder specified by the user, where a CSV will generated for each mentor,
-    showing the list of students who applied to him / her and their application information.
+    showing the list of students who applied to him / her and their application information.<br/><br/>
 
 </li>
 <li>
@@ -90,7 +90,7 @@ This script is used in two stages:
             </tr>
         </table>
 
-        Note that a mentor can have any number of applicants<br/>
+        Note that a mentor can have any number of applicants<br/><br/>
     </li>
     <li>
         The mentee application file<br/><br/>
