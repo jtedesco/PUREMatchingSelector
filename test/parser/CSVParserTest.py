@@ -1,4 +1,3 @@
-from copy import deepcopy
 import unittest
 from src.model.Mentee import Mentee
 from src.model.Mentor import Mentor
@@ -87,7 +86,7 @@ class CSVParserTest(unittest.TestCase):
           multiple choice types), and may have chosen multiple mentors to apply to
         """
 
-        expectedMentees = deepcopy(self.mentees)
+        expectedMentees = self.mentees
         expectedMentees[0].mentors = [self.mentors[0], self.mentors[1]]
         expectedMentees[1].mentors = [self.mentors[2]]
         expectedMentees[2].mentors = [self.mentors[1], self.mentors[2]]
@@ -104,7 +103,7 @@ class CSVParserTest(unittest.TestCase):
         """
 
         # The mentor objects when mentees are not parsed simultaneously
-        expectedMentorA, expectedMentorB, expectedMentorC = tuple(deepcopy(self.mentors))
+        expectedMentorA, expectedMentorB, expectedMentorC = tuple(self.mentors)
         expectedMentorA.numberOfMenteesWanted = 1
         expectedMentorA.menteesWanted = ["John Smith"]
         expectedMentorB.numberOfMenteesWanted = 1
