@@ -23,14 +23,8 @@ class CSVParser(object):
         # Open the files for reading
         self.delimiter = delimiter
         self.quoteCharacter = quoteCharacter
-        try:
-            self.menteeCsvFile = open(menteeFilePath, 'rb')
-        except Exception:
-            self.menteeCsvFile = None
-        try:
-            self.mentorCsvFile = open(mentorFilePath, 'rb')
-        except Exception:
-            self.mentorCsvFile = None
+        self.menteeCsvFile = open(menteeFilePath, 'r')
+        self.mentorCsvFile = open(mentorFilePath, 'r')
 
 
     def parseMentorsAndMentees(self):
