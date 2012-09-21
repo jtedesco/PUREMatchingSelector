@@ -1,6 +1,6 @@
 import csv
-from Mentee import Mentee
-from Mentor import Mentor
+from src.model.Mentor import Mentor
+from src.model.Mentee import Mentee
 
 __author__ = 'Jon Tedesco'
 

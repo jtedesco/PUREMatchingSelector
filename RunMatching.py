@@ -1,6 +1,5 @@
-from pprint import pprint
-from CSVParser import CSVParser
-from Matcher import Matcher
+from src.matcher.Matcher import Matcher
+from src.parser.CSVParser import CSVParser
 
 __author__ = 'Jon Tedesco'
 

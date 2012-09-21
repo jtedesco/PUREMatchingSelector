@@ -1,6 +1,5 @@
 import csv
-from CSVParser import CSVParser
-from Matching import Matching
+from src.matcher.Matching import Matching
 
 __author__ = 'Jon Tedesco'
 
