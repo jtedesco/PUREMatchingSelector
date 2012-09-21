@@ -63,7 +63,7 @@ This script is used in two stages:
 
     To generate the mentor / mentee matchings, run the <tt>RunMatching.py</tt> script. This expects two CSV input files:
 
-    * The mentor file
+    *   The mentor file
 
         Contains the names of mentors, the number of mentees they are willing to take, and an ordered list of their top
         choices for students.
@@ -81,8 +81,9 @@ This script is used in two stages:
                 <td>Mentor Y</td> <td>1</td> <td>student1</td> <td>student2<td>
             </tr>
         </table>
+        <br/>
 
-    * The mentee application file
+    *   The mentee application file
 
         This should be the same file as in the first stage
 
