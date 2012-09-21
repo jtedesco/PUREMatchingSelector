@@ -47,11 +47,11 @@ This script is used in two stages:
         </table>
 
         Arbitrary student data could be in the omitted columns, but we focus on the mentor application columns. In this example,
-        mentee applicants were given two choices (first and second choices) for mentors to work with. This student, *student1*,
-        selected *Mentor X* as his first choice, and *Mentor Y* as his second choice.
+        mentee applicants were given two choices (first and second choices) for mentors to work with. This student, <i>student1</i>,
+        selected <i>Mentor X</i> as his first choice, and <i>Mentor Y</i> as his second choice.
 
-        During the preliminary matching, this means that *student1* will be added to the preference lists of *Mentor X*
-        and *Mentor Y*.
+        During the preliminary matching, this means that <i>student1</i> will be added to the preference lists of <i>Mentor X</i>
+        and <i>Mentor Y</i>.
 
     ## Output
 
@@ -75,10 +75,10 @@ This script is used in two stages:
                 <th>Name</th> <th>Number of Mentees</th> <th>Mentee 1</th> <th>Mentee 2</th> <th>...</th>
             </tr>
             <tr>
-                <td>Mentor X</td> <td>1</td> <td> student1 </td> <td><td> <td><td>
+                <td>Mentor X</td> <td>1</td> <td>student1</td>
             </tr>
             <tr>
-                <td>Mentor Y</td> <td>1</td> <td> student1 </td> <td> student2 <td> <td><td>
+                <td>Mentor Y</td> <td>1</td> <td>student1</td> <td>student2<td>
             </tr>
         </table>
 
@@ -96,8 +96,9 @@ This script is used in two stages:
     > Mentor X: student1
     > Mentor Y: student2
 
-    This is because, although *Mentor Y* placed *student1* above *student2* in his/her preference list, pairing *Mentor Y*
-    with *student1* would have resulted in a smaller matching, since *Mentor X* would have been unmatched.
+    This is because, although <i>Mentor Y</i> placed <i>student1</i> above <i>student2</i> in his/her preference list,
+    pairing <i>Mentor Y</i> with <i>student1</i> would have resulted in a smaller matching, since <i>Mentor X</i> would
+    have been unmatched.
 
     ## Output
 
@@ -107,4 +108,4 @@ This script is used in two stages:
 
 # Requirements
 
-* Python 2.7 or newer
+ * Python 2.7 or newer
