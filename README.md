@@ -19,9 +19,9 @@ This script is used in two stages:
 
     <ul>
     <li>
-        The mentor file
+        The mentor file<br/><br/>
 
-        Contains the names of mentors, separated on each line. Formatted as:
+        Contains the names of mentors, separated on each line. Formatted as:<br/>
 
         <pre>
         Name
@@ -30,12 +30,12 @@ This script is used in two stages:
         ...
         </pre>
 
-        This will be parsed into two <tt>Mentor</tt> objects.
+        This will be parsed into two <tt>Mentor</tt> objects.<br/>
     </li>
     <li>
-        The mentee application file
+        The mentee application file<br/><br/>
 
-        Contains the survey responses of mentee applicants. Specifically, this file is formatted as a CSV file, formatted as:
+        Contains the survey responses of mentee applicants. Specifically, this file is formatted as a CSV file, formatted as:<br/>
 
         <table>
             <tr>
@@ -51,7 +51,7 @@ This script is used in two stages:
 
         Arbitrary student data could be in the omitted columns, but we focus on the mentor application columns. In this example,
         mentee applicants were given two choices (first and second choices) for mentors to work with. This student, <i>student1</i>,
-        selected <i>Mentor X</i> as his first choice, and <i>Mentor Y</i> as his second choice.
+        selected <i>Mentor X</i> as his first choice, and <i>Mentor Y</i> as his second choice.<br/><br/>
 
         During the preliminary matching, this means that <i>student1</i> will be added to the preference lists of <i>Mentor X</i>
         and <i>Mentor Y</i>.
@@ -71,12 +71,12 @@ This script is used in two stages:
 
     <ul>
     <li>
-        The mentor file
+        The mentor file<br/><br/>
 
         Contains the names of mentors, the number of mentees they are willing to take, and an ordered list of their top
-        choices for students.
+        choices for students.<br/><br/>
 
-        For example, continuing our example from above, the mentors input may look like this:
+        For example, continuing our example from above, the mentors input may look like this:<br/>
 
         <table>
             <tr>
@@ -90,12 +90,12 @@ This script is used in two stages:
             </tr>
         </table>
 
-        Note that a mentor can have any number of applicants
+        Note that a mentor can have any number of applicants<br/>
     </li>
     <li>
-        The mentee application file
+        The mentee application file<br/><br/>
 
-        This should be the same file as in the first stage
+        This should be the same file as in the first stage<br/>
     </li>
     </ul>
 
