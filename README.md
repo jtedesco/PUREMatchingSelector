@@ -105,10 +105,8 @@ Mentor Y
 
     In the above exampe, the following matching will be obtained:
 
-    <pre>
-Mentor X: student1
-Mentor Y: student2
-    </pre>
+<pre>Mentor X: student1
+Mentor Y: student2</pre>
 
     This is because, although <i>Mentor Y</i> placed <i>student1</i> above <i>student2</i> in his/her preference list,
     pairing <i>Mentor Y</i> with <i>student1</i> would have resulted in a smaller matching, since <i>Mentor X</i> would
