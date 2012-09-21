@@ -25,6 +25,7 @@ This script is used in two stages:
         Name
         Mentor X
         Mentor Y
+        ...
         </pre>
 
         This will be parsed into two <tt>Mentor</tt> objects.
@@ -39,6 +40,8 @@ This script is used in two stages:
             </tr>
             <tr>
                 <td>student1@illinois.edu</td> <td>John</td> <td> ... </td> <td>1</td> <td>0</td> <td>...</td> <td>0</td> <td>1</td>
+            </tr>
+            <tr>
                 <td>student2@illinois.edu</td> <td>Jane</td> <td> ... </td> <td>1</td> <td>0</td> <td>...</td> <td>0</td> <td>0</td>
             </tr>
         </table>
@@ -73,6 +76,8 @@ This script is used in two stages:
             </tr>
             <tr>
                 <td>Mentor X</td> <td>1</td> <td> student1 </td> <td><td> <td><td>
+            </tr>
+            <tr>
                 <td>Mentor Y</td> <td>1</td> <td> student1 </td> <td> student2 <td> <td><td>
             </tr>
         </table>
