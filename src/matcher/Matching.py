@@ -11,24 +11,24 @@ class Matching(object):
         self.mentees = mentees
         self.mentors = mentors
 
-        self.matchedMentors = []
-        self.matchedMentees = []
-        self.unmatchedMentors = []
-        self.unmatchedMentees = []
+        self.matchedMentors = set()
+        self.matchedMentees = set()
+        self.unmatchedMentors = set()
+        self.unmatchedMentees = set()
 
         # Generate the list of matched mentees & mentors, and unmatched mentors
         for mentor in mentors:
             if len(mentor.mentees) > 0:
-                self.matchedMentors.append(mentor)
+                self.matchedMentors.add(mentor)
                 for mentee in mentor.mentees:
-                    self.matchedMentees.append(mentee)
+                    self.matchedMentees.add(mentee)
             else:
-                self.unmatchedMentors.append(mentor)
+                self.unmatchedMentors.add(mentor)
 
         # Generate the list of unmatched mentees
         for mentee in self.mentees:
             if mentee not in self.matchedMentees:
-                self.unmatchedMentees.append(mentee)
+                self.unmatchedMentees.add(mentee)
 
         
     def getUnmatchedMentees(self):
