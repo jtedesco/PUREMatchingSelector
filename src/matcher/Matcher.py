@@ -74,7 +74,7 @@ class Matcher(object):
         count = 0
         titleRow = None
         for applicant in applicants:
-            parser = csv.reader(open(applicantCsvFilePath, 'rb'))
+            parser = csv.reader(open(applicantCsvFilePath, 'rbU'))
             for row in parser:
                 if titleRow is None:
                     titleRow = row

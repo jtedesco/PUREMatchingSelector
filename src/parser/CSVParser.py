@@ -23,8 +23,8 @@ class CSVParser(object):
         # Open the files for reading
         self.delimiter = delimiter
         self.quoteCharacter = quoteCharacter
-        self.menteeCsvFile = open(menteeFilePath, 'r')
-        self.mentorCsvFile = open(mentorFilePath, 'r')
+        self.menteeCsvFile = open(menteeFilePath, 'rU')
+        self.mentorCsvFile = open(mentorFilePath, 'rU')
 
         # Calculate mentors & mentees lazily
         self.mentors = None
